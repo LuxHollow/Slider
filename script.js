@@ -1,6 +1,6 @@
 const paginazione = document.getElementById('paginazione');
 const labels = document.querySelectorAll('#paginazione > label');
-const pagine = document.getElementsById('pagine');
+const pagine = document.getElementById('pagine');
 const radioBtn = document.querySelectorAll('#pagine > input[type=radio]');
 let toccoInizioX = 0;
 let toccoFineX = 0;
@@ -26,9 +26,9 @@ function touchEnd(e) {
 }
 
 function moveTo(direction) {
-    if(direction === 'next' && paginaCorrente < labels.lenght) {
+    if(direction === 'next' && paginaCorrente < labels.lenght - 1) {
        goToPage(paginaCorrente + 1);
-    } else if(direction === 'prev' && paginaCorrente >1) {
+    } else if(direction === 'prev' && paginaCorrente >0) {
         goToPage(paginaCorrente - 1);
 }
 }
