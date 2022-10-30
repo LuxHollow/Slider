@@ -4,23 +4,17 @@ const pagine = document.getElementsById('pagine');
 const radioBtn = document.querySelectorAll('#pagine > input[type=radio]');
 let toccoInizioX = 0;
 let toccoFineX = 0;
-let currentPage = 1; 
+let paginaCorrente = 0; 
 
-paginazione.addEventListener('click', e => {
-    const item = e.target;
-    if(item.nodeName === 'LABEL') {
-        setCheckedLabel(item.dataset.page);
-    }
-})
-
-function setCheckedLabel(numberPageSelected) {
-    labels[currentPage-1].classList.remove('lab-sel');
-    labels[numberPageSelected-1].classList.add('lab-sel');
-    currentPage = numberPageSelected;
-}
-
+paginazione.addEventListener('click', changePage);
 pagine.addEventListener('touchstart', touchStart, false);
 pagine.addEventListener('touchend', touchEnd, false);
+
+function changePage (e) {
+    if(e.target.nodeName === 'LABEL') {
+        goToPage(e.target.dataset.page - 1);
+    }
+}
 
 function touchStart(e) {
     toccoInizioX = e.changedTouches[0].screenX;
@@ -32,10 +26,16 @@ function touchEnd(e) {
 }
 
 function moveTo(direction) {
-    if(direction === 'next' && currentPage < labels.lenght) {
-        labels[currentPage-1].classList.remove('lab-sel');
-        labels[currentPage].classList.add('lab-sel');
-        radioBtn[currentPage].checked = true;
-        currentPage++;
-    }
+    if(direction === 'next' && paginaCorrente < labels.lenght) {
+       goToPage(paginaCorrente + 1);
+    } else if(direction === 'prev' && paginaCorrente >1) {
+        goToPage(paginaCorrente - 1);
+}
+}
+
+function goToPage(numPagina) {
+    labels[paginaCorrente].classList.remove('lab-sel');
+    labels[numPagina].classList.add('lab-sel');
+    radioBtn[numPagina].checked = true;
+    paginaCorrente = numPagina;
 }
